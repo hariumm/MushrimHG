@@ -1,0 +1,28 @@
+lobby:
+  world: world
+  x: 0.5
+  y: 64.0
+  z: 0.5
+  yaw: 0.0
+  pitch: 0.0
+
+spawn-points:
+  spawn1:
+    world: world
+    x: 100.5
+    y: 64.0
+    z: 100.5
+  spawn2:
+    world: world
+    x: -100.5
+    y: 64.0
+    z: 100.5
+
+game-settings:
+  countdown: 60
+  pvp-time: 300
+  game-time: 1200
+  border-shrink: true
+  border-start-size: 500
+  border-end-size: 50
+  border-shrink-time: 600
