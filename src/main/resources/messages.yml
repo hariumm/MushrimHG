@@ -1,0 +1,11 @@
+messages:
+  already-game-in-progress: "&cExiste um jogo em andamento no momento."
+  enough-players: "&cNão há jogadores suficientes para começar o jogo."
+  starting-game: "&eO jogo começa em {TIME} segundos!"
+  game-started: "&aO jogo começou! Boa sorte."
+  game-end: "&cO jogo terminou!"
+  join-message: "&a{PLAYER} entrou no jogo!"
+  exit-message: "&a{PLAYER} saiu do jogo!"
+  player-killed: "&e{PLAYER} foi morto por {KILLER}!"
+  player-died: "&e{PLAYER} morreu."
+  player-win: "&a{PLAYER} venceu o jogo!"

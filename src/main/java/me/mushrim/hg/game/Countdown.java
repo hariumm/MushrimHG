@@ -16,6 +16,7 @@ public abstract class Countdown {
     }
 
     public abstract void onTick(int timeLeft);
+
     public abstract void onFinish();
 
     public void start() {

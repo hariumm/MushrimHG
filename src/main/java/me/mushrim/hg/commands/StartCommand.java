@@ -18,7 +18,7 @@ public class StartCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         gameManager.startGame();
-        sender.sendMessage(ChatUtils.color("&aIniciando o jogo..."));
+        sender.sendMessage(ChatUtils.color("§aIniciando o jogo..."));
         return true;
     }
 }

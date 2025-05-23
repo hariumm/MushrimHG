@@ -7,14 +7,12 @@ import java.util.UUID;
 
 import lombok.Getter;
 import me.mushrim.hg.HGPlugin;
+import me.mushrim.hg.utils.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import me.mushrim.hg.utils.ChatUtils;
 
 @Getter
 public class GameManager {
@@ -52,7 +50,7 @@ public class GameManager {
                     (float) lobbySection.getDouble("pitch")
             );
         } else {
-            lobbyLocation = Bukkit.getWorlds().getFirst().getSpawnLocation();
+            lobbyLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
             plugin.getLogger().warning("Configuração do lobby não encontrada, usando spawn padrão");
         }
 
@@ -76,7 +74,7 @@ public class GameManager {
 
         if (spawnPoints.isEmpty()) {
             plugin.getLogger().warning("Nenhum spawn point configurado, usando spawn padrão");
-            spawnPoints.add(Bukkit.getWorlds().getFirst().getSpawnLocation());
+            spawnPoints.add(Bukkit.getWorlds().get(0).getSpawnLocation());
         }
 
         // Carregar tempos
@@ -91,17 +89,17 @@ public class GameManager {
 
     public void startGame() {
         if (gameState != GameState.WAITING) {
-            Bukkit.broadcastMessage(ChatUtils.color("&cO jogo já está em andamento!"));
+            Bukkit.broadcastMessage(plugin.getMessageAdapter().getMessage("already-game-in-progress"));
             return;
         }
 
         if (Bukkit.getOnlinePlayers().size() < 2) {
-            Bukkit.broadcastMessage(ChatUtils.color("&cNão há jogadores suficientes para começar!"));
+            Bukkit.broadcastMessage(plugin.getMessageAdapter().getMessage("enough-players"));
             return;
         }
 
         gameState = GameState.STARTING;
-        Bukkit.broadcastMessage(ChatUtils.color("&aO jogo começará em " + countdownTime + " segundos!"));
+        Bukkit.broadcastMessage(plugin.getMessageAdapter().getMessage("starting-game").replace("{TIME}", String.valueOf(countdownTime)));
 
         // Teleportar jogadores para o lobby
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -119,7 +117,7 @@ public class GameManager {
         new Countdown(plugin, this, countdownTime) {
             @Override
             public void onTick(int timeLeft) {
-                Bukkit.broadcastMessage(ChatUtils.color("&aO jogo começará em " + timeLeft + " segundos!"));
+                Bukkit.broadcastMessage(plugin.getMessageAdapter().getMessage("starting-game").replace("{TIME}", String.valueOf(timeLeft)));
 
                 // Atualizar scoreboard
                 for (UUID uuid : players) {
@@ -139,7 +137,7 @@ public class GameManager {
 
     private void startHG() {
         gameState = GameState.ACTIVE;
-        Bukkit.broadcastMessage(ChatUtils.color("&aO jogo começou! Boa sorte!"));
+        Bukkit.broadcastMessage(plugin.getMessageAdapter().getMessage("game-started"));
 
         // Teleportar jogadores para spawns aleatórios
         for (UUID uuid : players) {
@@ -153,7 +151,7 @@ public class GameManager {
 
     public void stopGame() {
         gameState = GameState.ENDED;
-        Bukkit.broadcastMessage(ChatUtils.color("&cO jogo terminou!"));
+        Bukkit.broadcastMessage(plugin.getMessageAdapter().getMessage("game-end"));
 
         // Limpar dados
         players.clear();

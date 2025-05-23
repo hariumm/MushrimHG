@@ -1,23 +1,27 @@
 package me.mushrim.hg;
 
 import lombok.Getter;
+import me.mushrim.hg.adapter.MessageAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.mushrim.hg.commands.HGCommand;
 import me.mushrim.hg.commands.StartCommand;
-import me.mushrim.hg.events.GameEvents;
-import me.mushrim.hg.events.PlayerEvents;
+import me.mushrim.hg.listeners.GameEvents;
+import me.mushrim.hg.listeners.PlayerEvents;
 import me.mushrim.hg.game.GameManager;
 
 @Getter
 public class HGPlugin extends JavaPlugin {
 
+    private MessageAdapter messageAdapter;
     private GameManager gameManager;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+        messageAdapter = new MessageAdapter(this);
+        messageAdapter.createMessagesFile();
 
         gameManager = new GameManager(this);
 
