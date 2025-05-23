@@ -1,5 +1,6 @@
 package me.mushrim.hg.commands;
 
+import me.mushrim.hg.HGPlugin;
 import me.mushrim.hg.game.GameManager;
 import me.mushrim.hg.utils.ChatUtils;
 import org.bukkit.command.Command;
@@ -9,10 +10,10 @@ import org.bukkit.entity.Player;
 
 public class HGCommand implements CommandExecutor {
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
-    public HGCommand(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public HGCommand(HGPlugin plugin) {
+        this.gameManager = plugin.getGameManager();
     }
 
     @Override

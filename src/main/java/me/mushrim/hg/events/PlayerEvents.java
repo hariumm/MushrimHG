@@ -1,5 +1,6 @@
 package me.mushrim.hg.events;
 
+import me.mushrim.hg.HGPlugin;
 import me.mushrim.hg.game.GameManager;
 import me.mushrim.hg.game.GameState;
 import me.mushrim.hg.utils.ChatUtils;
@@ -13,10 +14,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerEvents implements Listener {
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
-    public PlayerEvents(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public PlayerEvents(HGPlugin plugin) {
+        this.gameManager = plugin.getGameManager();
     }
 
     @EventHandler

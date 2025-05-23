@@ -3,6 +3,7 @@ package me.mushrim.hg.game;
 import java.util.HashMap;
 import java.util.UUID;
 
+import me.mushrim.hg.HGPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -18,8 +19,8 @@ public class ScoreboardManager {
     private final GameManager gameManager;
     private final HashMap<UUID, Scoreboard> scoreboards;
 
-    public ScoreboardManager(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public ScoreboardManager(HGPlugin plugin) {
+        this.gameManager = plugin.getGameManager();
         this.scoreboards = new HashMap<>();
     }
 

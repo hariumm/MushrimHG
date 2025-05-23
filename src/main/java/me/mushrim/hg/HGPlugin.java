@@ -13,22 +13,19 @@ import me.mushrim.hg.game.GameManager;
 @Getter
 public class HGPlugin extends JavaPlugin {
 
-    private static HGPlugin instance;
     private GameManager gameManager;
 
     @Override
     public void onEnable() {
-        instance = this;
-
         saveDefaultConfig();
 
         gameManager = new GameManager(this);
 
-        getCommand("hg").setExecutor(new HGCommand(gameManager));
-        getCommand("starthg").setExecutor(new StartCommand(gameManager));
+        getCommand("hg").setExecutor(new HGCommand(this));
+        getCommand("starthg").setExecutor(new StartCommand(this));
 
-        Bukkit.getPluginManager().registerEvents(new PlayerEvents(gameManager), this);
-        Bukkit.getPluginManager().registerEvents(new GameEvents(gameManager), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerEvents(this), this);
+        Bukkit.getPluginManager().registerEvents(new GameEvents(this), this);
 
         getLogger().info("MushrimHG habilitado com sucesso!");
     }
@@ -36,9 +33,5 @@ public class HGPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("MushrimHG desabilitado.");
-    }
-
-    public static HGPlugin getInstance() {
-        return instance;
     }
 }

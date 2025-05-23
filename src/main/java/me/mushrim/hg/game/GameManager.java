@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import lombok.Getter;
+import me.mushrim.hg.HGPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -14,21 +16,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.mushrim.hg.utils.ChatUtils;
 
+@Getter
 public class GameManager {
 
-    private JavaPlugin plugin;
+    private final HGPlugin plugin;
+    private final ScoreboardManager scoreboardManager;
+    private final List<UUID> players;
+    private final HashMap<UUID, Integer> kills;
     private GameState gameState;
-    private ScoreboardManager scoreboardManager;
-    private List<UUID> players;
-    private HashMap<UUID, Integer> kills;
     private Location lobbyLocation;
     private List<Location> spawnPoints;
     private int countdownTime;
 
-    public GameManager(JavaPlugin plugin) {
+    public GameManager(HGPlugin plugin) {
         this.plugin = plugin;
         this.gameState = GameState.WAITING;
-        this.scoreboardManager = new ScoreboardManager(this);
+        this.scoreboardManager = new ScoreboardManager(plugin); // TODO: Tirar esse instanciamento daq e botar na main
         this.players = new ArrayList<>();
         this.kills = new HashMap<>();
         loadConfig();
@@ -49,7 +52,7 @@ public class GameManager {
                     (float) lobbySection.getDouble("pitch")
             );
         } else {
-            lobbyLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
+            lobbyLocation = Bukkit.getWorlds().getFirst().getSpawnLocation();
             plugin.getLogger().warning("Configuração do lobby não encontrada, usando spawn padrão");
         }
 
@@ -73,7 +76,7 @@ public class GameManager {
 
         if (spawnPoints.isEmpty()) {
             plugin.getLogger().warning("Nenhum spawn point configurado, usando spawn padrão");
-            spawnPoints.add(Bukkit.getWorlds().get(0).getSpawnLocation());
+            spawnPoints.add(Bukkit.getWorlds().getFirst().getSpawnLocation());
         }
 
         // Carregar tempos
@@ -169,27 +172,6 @@ public class GameManager {
 
         // Atualizar scoreboard
         scoreboardManager.updateScoreboard(player, -1);
-    }
-
-    // Getters e Setters
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    public List<UUID> getPlayers() {
-        return players;
-    }
-
-    public HashMap<UUID, Integer> getKills() {
-        return kills;
-    }
-
-    public ScoreboardManager getScoreboardManager() {
-        return scoreboardManager;
-    }
-
-    public Location getLobbyLocation() {
-        return lobbyLocation;
     }
 
     public void setLobbyLocation(Location location) {

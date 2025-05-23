@@ -1,5 +1,6 @@
 package me.mushrim.hg.events;
 
+import me.mushrim.hg.HGPlugin;
 import me.mushrim.hg.game.GameManager;
 import me.mushrim.hg.game.GameState;
 import org.bukkit.event.EventHandler;
@@ -13,10 +14,10 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class GameEvents implements Listener {
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
 
-    public GameEvents(GameManager gameManager) {
-        this.gameManager = gameManager;
+    public GameEvents(HGPlugin plugin) {
+        this.gameManager = plugin.getGameManager();
     }
 
     @EventHandler
