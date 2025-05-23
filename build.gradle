@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group = 'me.mushrim.hg'
+version = '1.0'
+
+repositories {
+    maven { url 'https://repo.codemc.org/repository/nms/' }
+    maven { url 'https://repo.dmulloy2.net/nexus/repository/public/' }
+    maven { url 'https://papermc.io/repo/repository/maven-public/' }
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    compileOnly("org.projectlombok:lombok:1.18.38")
+
+    annotationProcessor("org.projectlombok:lombok:1.18.38")
+
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
+
+jar {
+    archiveBaseName.set('MushrimHG')
+    archiveVersion.set('1.0')
+}

@@ -1,6 +1,6 @@
 name: MushrimHG
 version: 1.0
-main: me.mushrim.hg.Main
+main: me.mushrim.hg.HGPlugin
 author: Harium
 description: Um plugin de Hunger Games para Spigot 1.8.9
 commands:
